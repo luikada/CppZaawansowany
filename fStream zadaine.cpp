@@ -71,7 +71,7 @@ int main()
     //sprawdzmy czy w zapisanym pliku te liczby sa w tej samej kolejnosci
 
   std::vector <int> CopyMango;
-  std::copy_n(Mango.begin(), 10, std::back_inserter(CopyMango));
+  std::copy_n(Mango.begin(), 100, std::back_inserter(CopyMango));
  
   std::cout << "kopia vektora : ";
   std::for_each(CopyMango.begin(), CopyMango.end(), [](const int n) { std::cout << n << ' '; });
