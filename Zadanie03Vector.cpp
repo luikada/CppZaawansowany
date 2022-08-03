@@ -55,21 +55,54 @@ int main()
 
 	//f) Skopiuj do drugiego wektora wszystkie liczby większe od 90 i mniejsze od - 90
 	std::vector <int> v3Copy;
-	std::copy_if(V3.begin(), V3.end(), std::back_inserter(v3Copy),[](int n) {return (n>-90)&&(n < 90); });
+	std::copy_if(V3.begin(), V3.end(), std::back_inserter(v3Copy),[](int n) {return (n<-90)||(n > 90); });
 	std::cout << "kopia vektora : ";
 	std::for_each(v3Copy.begin(), v3Copy.end(), [](const int n) { std::cout << n << ' '; });
 	std::cout << std::endl << std::endl;
 
 
 	//g) Skopiuj do innego wektora 10 kolejnych liczb zaczynając od 78
+
+ //metoda bez find i copy_n
+   //std::vector <int> tenNumbers;
+	//copy_if(V3.begin(), V3.end(), std::back_inserter(tenNumbers), [](const int i) { return i > 78 && i <= 88; });
+	//std::cout << "kopia vektora : ";
+	//std::for_each(tenNumbers.begin(), tenNumbers.end(), [](const int n) { std::cout << n << ' '; });
+	//std::cout << std::endl << std::endl;
+	
+	std::cout << std::endl << std::endl << std::endl;
+
+	//	na pewno nie powinno sie tam uzywac remove
+	//	powinnas uzyc find a potem copy_n, zeby skopiowac od iteratora zwroconego z funkcji find
+
 	std::vector <int> tenNumbers;
-	std::copy_n(v3Copy.begin(), 22, std::back_inserter(tenNumbers));
-	auto makeItDisappear=std::remove_if(tenNumbers.begin(), tenNumbers.end(), [](int n) {return n>= -78; });
-	tenNumbers.erase(makeItDisappear, tenNumbers.end());
-	std::cout << "kopia vektora : ";
-	std::for_each(tenNumbers.begin(), tenNumbers.end(), [](const int n) { std::cout << n << ' '; });
-	std::cout << std::endl << std::endl;
+	auto xElement = std::find(V3.begin(), V3.end(), 78);
+	std::copy_n(xElement, 10, std::back_inserter(tenNumbers));   //nie dziala tenNumbers.begin(), std::back_inserter(tenNumbers)
+	std::for_each(tenNumbers.begin(), tenNumbers.end(), [](int i) {std::cout << i << ', '; });
+
+
+
+	std::cout << std::endl << std::endl << std::endl;
+
+	//Michal dodawanie ostatnich liczn jako second_inserter
+	std::cout << "Michal " << std::endl << std::endl;
+	std::vector<int> numbers(100);
+	std::iota(numbers.begin(), numbers.end(), -80);
+
+	
+	std::vector<int> second;
+	std::copy_n(numbers.begin(), 10, std::back_inserter(second));
+	std::cout << std::endl << std::endl << std::endl;
+
+	auto second_inserter = std::back_inserter(second);
+	second_inserter = 123;
+	second_inserter = 99;
+
+	std::for_each(second.begin(), second.end(), [](const int i) { std::cout << i << ";\n"; });
+
+	//std::for_each(nums.end() - 100, nums.end(), [](int i) { std::cout << i << '\n'; }); // wypisze 100 ostatnie elementów
 
 }
+
 
 
